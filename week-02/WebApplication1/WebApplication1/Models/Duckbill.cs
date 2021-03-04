@@ -1,0 +1,14 @@
+﻿using System;
+
+namespace WebApplication1.Models
+{
+    public class Duckbill
+    {
+        public Guid ID { get; set; }
+
+        public string Name { get; set; }
+
+
+        public string Name2 { get; set; }
+    }
+}
