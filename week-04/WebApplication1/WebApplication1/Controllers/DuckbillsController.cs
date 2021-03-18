@@ -23,9 +23,9 @@ namespace WebApplication1.Controllers
 
         // GET: api/Duckbills
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Duckbill>>> GetDuckbill()
+        public async Task<ActionResult<Duckbill[]>> GetDuckbill()
         {
-            return await _context.Duckbill.ToListAsync();
+            return await _context.Duckbill.ToArrayAsync();
         }
 
         // GET: api/Duckbills/5
@@ -52,7 +52,10 @@ namespace WebApplication1.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(duckbill).State = EntityState.Modified;
+            Duckbill dbDuckbill = _context.Duckbill.FirstOrDefault(x => x.ID == duckbill.ID);
+
+            dbDuckbill.DateOfBirth = duckbill.DateOfBirth;
+            dbDuckbill.Name = duckbill.Name;
 
             try
             {
