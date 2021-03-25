@@ -8,8 +8,11 @@ namespace ConsoleApp1
         {
             Console.WriteLine("Hello World!");
 
-            IBank ing = new ING();
-            IBank bt = new BT();
+            IINGExchangeRate iNGExchangeRate = new INGExchangeRate();
+            IBTExchangeRate bTExchangeRate = new BTExchangeRate();
+
+            IBank ing = new ING(iNGExchangeRate);
+            IBank bt = new BT(bTExchangeRate);
 
             Console.WriteLine($"ING converts 100 EUR into {ing.ExchangeInRON(100)}");
             Console.WriteLine($"BT converts 100 EUR into {bt.ExchangeInRON(100)}");
@@ -51,12 +54,15 @@ namespace ConsoleApp1
 
     public class ING : IBank
     {
-        private readonly IINGExchangeRate iNGExchangeRate;        
+        private readonly IINGExchangeRate iNGExchangeRate;
+
+        public ING(IINGExchangeRate iNGExchangeRate)
+        {
+            this.iNGExchangeRate = iNGExchangeRate;
+        }
 
         public decimal ExchangeInRON(decimal valueInEUR)
         {
-            decimal EURtoRONExchangeRate = 4.8554M;
-
             return valueInEUR * iNGExchangeRate.Value();
         }
     }
@@ -65,10 +71,13 @@ namespace ConsoleApp1
     {
         private readonly IBTExchangeRate bTExchangeRate;
 
+        public BT(IBTExchangeRate bTExchangeRate)
+        {
+            this.bTExchangeRate = bTExchangeRate;
+        }
+
         public decimal ExchangeInRON(decimal valueInEUR)
         {
-            decimal EURtoRONExchangeRate = 4.7554M;
-
             return valueInEUR * bTExchangeRate.Value();
         }
     }
