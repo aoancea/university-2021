@@ -32,9 +32,20 @@ namespace ConsoleApp1
                 ingParams.Add(dependecyInjectionContainer[parameterInfo.ParameterType]);
             }
 
+            //var parameters = new object[1];
+            //parameters[0] = ingParams[0];
+
+            //ING ingInstance = Activator.CreateInstance(typeof(ING), parameters) as ING;
+
+            //ING ingInstance = Activator.CreateInstance(typeof(ING), new object[] { ingParams.ToArray() }) as ING;
+
+            var ingCtorParams = ingParams.ToArray();
+
+            ING ingInstance = Activator.CreateInstance(typeof(ING), ingCtorParams) as ING;
             //ING ingInstance = Activator.CreateInstance(typeof(ING), ingParams) as ING;
 
-            IBank ing = new ING(dependecyInjectionContainer[typeof(IINGExchangeRate)] as IINGExchangeRate, dependecyInjectionContainer[typeof(IBTExchangeRate)] as IBTExchangeRate);
+            //IBank ing = new ING(dependecyInjectionContainer[typeof(IINGExchangeRate)] as IINGExchangeRate);
+            IBank ing = Activator.CreateInstance(typeof(ING), ingCtorParams) as ING;
             IBank bt = new BT(dependecyInjectionContainer[typeof(IBTExchangeRate)] as IBTExchangeRate);
 
             Console.WriteLine($"ING converts 100 EUR into {ing.ExchangeInRON(100)}");
@@ -90,7 +101,7 @@ namespace ConsoleApp1
         private readonly IINGExchangeRate iNGExchangeRate;
         private readonly IBTExchangeRate bTExchangeRate;
 
-        public ING(IINGExchangeRate iNGExchangeRate, IBTExchangeRate bTExchangeRate, IBTExchangeRate bTExchangeRate1, IBTExchangeRate bTExchangeRate2, IBTExchangeRate bTExchangeRate3, IBTExchangeRate bTExchangeRate4, IBTExchangeRate bTExchangeRate5, IBTExchangeRate bTExchangeRate6, IBTExchangeRate bTExchangeRate7)
+        public ING(IINGExchangeRate iNGExchangeRate, IBTExchangeRate bTExchangeRate, IBTExchangeRate bTExchangeRate2, IBTExchangeRate bTExchangeRate3, IBTExchangeRate bTExchangeRate4, IBTExchangeRate bTExchangeRate5)
         {
             this.iNGExchangeRate = iNGExchangeRate;
         }
