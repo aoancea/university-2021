@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 
 namespace ConsoleApp1
 {
@@ -8,11 +11,31 @@ namespace ConsoleApp1
         {
             Console.WriteLine("Hello World!");
 
-            IINGExchangeRate iNGExchangeRate = new INGExchangeRate();
-            IBTExchangeRate bTExchangeRate = new BTExchangeRate();
+            IINGExchangeRate iNGExchangeRate2020 = new INGExchangeRate2020();
+            IINGExchangeRate iNGExchangeRate2021 = new INGExchangeRate2021();
 
-            IBank ing = new ING(iNGExchangeRate);
-            IBank bt = new BT(bTExchangeRate);
+            IBTExchangeRate bTExchangeRate2020 = new BTExchangeRate2020();
+            IBTExchangeRate bTExchangeRate2021 = new BTExchangeRate2021();
+
+            Dictionary<Type, object> dependecyInjectionContainer = new Dictionary<Type, object>();
+            dependecyInjectionContainer.Add(typeof(IINGExchangeRate), iNGExchangeRate2020);
+            dependecyInjectionContainer.Add(typeof(IBTExchangeRate), bTExchangeRate2020);
+
+            ConstructorInfo constructorInfo = typeof(ING).GetConstructors().FirstOrDefault();
+
+            List<object> ingParams = new List<object>();
+
+            foreach (ParameterInfo parameterInfo in constructorInfo.GetParameters())
+            {
+                Console.WriteLine(parameterInfo.ParameterType.ToString());
+
+                ingParams.Add(dependecyInjectionContainer[parameterInfo.ParameterType]);
+            }
+
+            //ING ingInstance = Activator.CreateInstance(typeof(ING), ingParams) as ING;
+
+            IBank ing = new ING(dependecyInjectionContainer[typeof(IINGExchangeRate)] as IINGExchangeRate, dependecyInjectionContainer[typeof(IBTExchangeRate)] as IBTExchangeRate);
+            IBank bt = new BT(dependecyInjectionContainer[typeof(IBTExchangeRate)] as IBTExchangeRate);
 
             Console.WriteLine($"ING converts 100 EUR into {ing.ExchangeInRON(100)}");
             Console.WriteLine($"BT converts 100 EUR into {bt.ExchangeInRON(100)}");
@@ -42,21 +65,32 @@ namespace ConsoleApp1
         decimal Value();
     }
 
-    public class INGExchangeRate : IINGExchangeRate
+    public class INGExchangeRate2020 : IINGExchangeRate
     {
         public decimal Value() => 4.8554M;
     }
 
-    public class BTExchangeRate : IBTExchangeRate
+    public class INGExchangeRate2021 : IINGExchangeRate
+    {
+        public decimal Value() => 4.86M;
+    }
+
+    public class BTExchangeRate2020 : IBTExchangeRate
     {
         public decimal Value() => 4.7554M;
+    }
+
+    public class BTExchangeRate2021 : IBTExchangeRate
+    {
+        public decimal Value() => 4.76M;
     }
 
     public class ING : IBank
     {
         private readonly IINGExchangeRate iNGExchangeRate;
+        private readonly IBTExchangeRate bTExchangeRate;
 
-        public ING(IINGExchangeRate iNGExchangeRate)
+        public ING(IINGExchangeRate iNGExchangeRate, IBTExchangeRate bTExchangeRate, IBTExchangeRate bTExchangeRate1, IBTExchangeRate bTExchangeRate2, IBTExchangeRate bTExchangeRate3, IBTExchangeRate bTExchangeRate4, IBTExchangeRate bTExchangeRate5, IBTExchangeRate bTExchangeRate6, IBTExchangeRate bTExchangeRate7)
         {
             this.iNGExchangeRate = iNGExchangeRate;
         }
