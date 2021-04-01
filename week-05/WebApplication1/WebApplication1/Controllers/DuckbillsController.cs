@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using WebApplication1.Data;
 using WebApplication1.Models;
 
@@ -31,7 +29,7 @@ namespace WebApplication1.Controllers
 
         private readonly WebApplication1Context _context;
 
-        public DuckbillsController(WebApplication1Context context, IHelper helper, IHelper helper2, IHelper helper3, IHelper helper4, IHelper helper5, IHelper helper6, IHelper helper7, IHelper helper8, IHelper helper9, IHelper helper10)
+        public DuckbillsController(WebApplication1Context context, IHelper helper)
         {
             _context = context;
             this.helper = helper;

@@ -9,51 +9,86 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
-
-            IINGExchangeRate iNGExchangeRate2020 = new INGExchangeRate2020();
-            IINGExchangeRate iNGExchangeRate2021 = new INGExchangeRate2021();
-
-            IBTExchangeRate bTExchangeRate2020 = new BTExchangeRate2020();
-            IBTExchangeRate bTExchangeRate2021 = new BTExchangeRate2021();
-
             Dictionary<Type, object> dependecyInjectionContainer = new Dictionary<Type, object>();
-            dependecyInjectionContainer.Add(typeof(IINGExchangeRate), iNGExchangeRate2020);
-            dependecyInjectionContainer.Add(typeof(IBTExchangeRate), bTExchangeRate2020);
+            dependecyInjectionContainer.Add(typeof(IINGExchangeRate), new INGExchangeRate2020());
+            dependecyInjectionContainer.Add(typeof(IBTExchangeRate), new BTExchangeRate2020());
 
-            ConstructorInfo constructorInfo = typeof(ING).GetConstructors().FirstOrDefault();
+            IBank ing = CreateInstance(typeof(ING), dependecyInjectionContainer) as ING;
+            IBank bt = CreateInstance(typeof(BT), dependecyInjectionContainer) as BT;
 
-            List<object> ingParams = new List<object>();
+            Console.WriteLine($"ING converts 100 EUR into {ing.ExchangeInRON(100)}");
+            Console.WriteLine($"BT converts 100 EUR into {bt.ExchangeInRON(100)}");
+        }
+
+        private static object CreateInstance(Type type, Dictionary<Type, object> diContainer)
+        {
+            ConstructorInfo constructorInfo = type.GetConstructors().FirstOrDefault();
+
+            List<object> ctorParamsList = new();
 
             foreach (ParameterInfo parameterInfo in constructorInfo.GetParameters())
             {
                 Console.WriteLine(parameterInfo.ParameterType.ToString());
 
-                ingParams.Add(dependecyInjectionContainer[parameterInfo.ParameterType]);
+                ctorParamsList.Add(diContainer[parameterInfo.ParameterType]);
             }
 
-            //var parameters = new object[1];
-            //parameters[0] = ingParams[0];
+            object[] ctorParams = ctorParamsList.ToArray();
 
-            //ING ingInstance = Activator.CreateInstance(typeof(ING), parameters) as ING;
-
-            //ING ingInstance = Activator.CreateInstance(typeof(ING), new object[] { ingParams.ToArray() }) as ING;
-
-            var ingCtorParams = ingParams.ToArray();
-
-            ING ingInstance = Activator.CreateInstance(typeof(ING), ingCtorParams) as ING;
-            //ING ingInstance = Activator.CreateInstance(typeof(ING), ingParams) as ING;
-
-            //IBank ing = new ING(dependecyInjectionContainer[typeof(IINGExchangeRate)] as IINGExchangeRate);
-            IBank ing = Activator.CreateInstance(typeof(ING), ingCtorParams) as ING;
-            IBank bt = new BT(dependecyInjectionContainer[typeof(IBTExchangeRate)] as IBTExchangeRate);
-
-            Console.WriteLine($"ING converts 100 EUR into {ing.ExchangeInRON(100)}");
-            Console.WriteLine($"BT converts 100 EUR into {bt.ExchangeInRON(100)}");
-
-
-            Console.ReadKey();
+            return Activator.CreateInstance(type, ctorParams);
         }
+
+
+        //static void Main(string[] args)
+        //{
+        //    Console.WriteLine("Hello World!");
+
+        //    //IINGExchangeRate iNGExchangeRate2020 = new INGExchangeRate2020();
+        //    //IINGExchangeRate iNGExchangeRate2021 = new INGExchangeRate2021();
+
+        //    //IBTExchangeRate bTExchangeRate2020 = new BTExchangeRate2020();
+        //    //IBTExchangeRate bTExchangeRate2021 = new BTExchangeRate2021();
+
+        //    Dictionary<Type, object> dependecyInjectionContainer = new Dictionary<Type, object>();
+        //    dependecyInjectionContainer.Add(typeof(IINGExchangeRate), new INGExchangeRate2020());
+        //    dependecyInjectionContainer.Add(typeof(IBTExchangeRate), new BTExchangeRate2020());
+
+        //    ConstructorInfo constructorInfo = typeof(ING).GetConstructors().FirstOrDefault();
+
+        //    List<object> ingParams = new List<object>();
+
+        //    foreach (ParameterInfo parameterInfo in constructorInfo.GetParameters())
+        //    {
+        //        Console.WriteLine(parameterInfo.ParameterType.ToString());
+
+        //        ingParams.Add(dependecyInjectionContainer[parameterInfo.ParameterType]);
+        //    }
+
+        //    //var parameters = new object[1];
+        //    //parameters[0] = ingParams[0];
+
+        //    //ING ingInstance = Activator.CreateInstance(typeof(ING), parameters) as ING;
+
+        //    //ING ingInstance = Activator.CreateInstance(typeof(ING), new object[] { ingParams.ToArray() }) as ING;
+
+        //    var ingCtorParams = ingParams.ToArray();
+
+        //    ING ingInstance = Activator.CreateInstance(typeof(ING), ingCtorParams) as ING;
+        //    //ING ingInstance = Activator.CreateInstance(typeof(ING), ingParams) as ING;
+
+        //    //IBank ing = new ING(dependecyInjectionContainer[typeof(IINGExchangeRate)] as IINGExchangeRate);
+        //    IBank ing = Activator.CreateInstance(typeof(ING), ingCtorParams) as ING;
+        //    IBank bt = new BT(dependecyInjectionContainer[typeof(IBTExchangeRate)] as IBTExchangeRate);
+
+        //    //IBank ing = new ING(iNGExchangeRate2021, bTExchangeRate2021, bTExchangeRate2021, bTExchangeRate2021);
+        //    //IBank ing2 = new ING(iNGExchangeRate2021, bTExchangeRate2021, bTExchangeRate2021, bTExchangeRate2021);
+
+        //    Console.WriteLine($"ING converts 100 EUR into {ing.ExchangeInRON(100)}");
+        //    Console.WriteLine($"BT converts 100 EUR into {bt.ExchangeInRON(100)}");
+
+
+        //    Console.ReadKey();
+        //}
     }
 
     // fiecare banca are propriul schimb valutar
@@ -101,7 +136,7 @@ namespace ConsoleApp1
         private readonly IINGExchangeRate iNGExchangeRate;
         private readonly IBTExchangeRate bTExchangeRate;
 
-        public ING(IINGExchangeRate iNGExchangeRate, IBTExchangeRate bTExchangeRate, IBTExchangeRate bTExchangeRate2, IBTExchangeRate bTExchangeRate3, IBTExchangeRate bTExchangeRate4, IBTExchangeRate bTExchangeRate5)
+        public ING(IINGExchangeRate iNGExchangeRate, IBTExchangeRate bTExchangeRate, IBTExchangeRate bTExchangeRate2, IBTExchangeRate bTExchangeRate3)
         {
             this.iNGExchangeRate = iNGExchangeRate;
         }
