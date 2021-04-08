@@ -39,6 +39,9 @@ namespace WebApplication1
                     options.UseSqlServer(Configuration.GetConnectionString("WebApplication1Context")));
 
             services.AddTransient<Controllers.IHelper, Controllers.Helper>();
+
+            services.AddTransient<Controllers.IBank, Controllers.INGBank>();
+            services.AddTransient<Controllers.IINGExchangeRate, Controllers.INGExchangeRate2020>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
