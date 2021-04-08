@@ -10,11 +10,11 @@ namespace Project1.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class DuckbillsControllers : ControllerBase
+    public class DuckbillsController : ControllerBase
     {
-        private readonly ILogger<DuckbillsControllers> _logger;
+        private readonly ILogger<DuckbillsController> _logger;
 
-        public DuckbillsControllers(ILogger<DuckbillsControllers> logger)
+        public DuckbillsController(ILogger<DuckbillsController> logger)
         {
             _logger = logger;
         }
