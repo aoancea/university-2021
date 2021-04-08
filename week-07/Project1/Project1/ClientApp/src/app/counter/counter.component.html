@@ -4,4 +4,8 @@
 
 <p aria-live="polite">Current count: <strong>{{ currentCount }}</strong></p>
 
+<p><strong>{{name}}</strong> are <strong>{{ currentCount }}</strong> mere</p>
+
+<input [(ngModel)]="currentCount" />
+
 <button class="btn btn-primary" (click)="incrementCounter()">Increment</button>

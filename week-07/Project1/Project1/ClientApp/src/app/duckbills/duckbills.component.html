@@ -1,0 +1,20 @@
+<h1 id="tableLabel">Duckbills</h1>
+
+<p>This component demonstrates fetching duckbills from the server</p>
+
+<p *ngIf="!duckbills"><em>Loading...</em></p>
+
+<table class='table table-striped' aria-labelledby="tableLabel" *ngIf="duckbills">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let duckbill of duckbills">
+      <td>{{ duckbill.id }}</td>
+      <td>{{ duckbill.name }}</td>
+    </tr>
+  </tbody>
+</table>

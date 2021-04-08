@@ -7,7 +7,10 @@ import { Component } from '@angular/core';
 export class CounterComponent {
   public currentCount = 0;
 
+  public name = this.currentCount < 10 ? 'Ana' : 'Alex';
+
   public incrementCounter() {
     this.currentCount++;
+    this.name = this.currentCount < 10 ? 'Ana' : 'Alex';
   }
 }
