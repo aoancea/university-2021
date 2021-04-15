@@ -11,12 +11,14 @@
     <tr>
       <th>ID</th>
       <th>Name</th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let duckbill of duckbills">
       <td>{{ duckbill.id }}</td>
       <td>{{ duckbill.name }}</td>
+      <td><button class="btn btn-primary" (click)="deleteDuckbill(duckbill)">delete</button></td>
     </tr>
   </tbody>
 </table>

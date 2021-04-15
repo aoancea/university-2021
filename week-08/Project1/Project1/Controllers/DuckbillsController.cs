@@ -89,18 +89,14 @@ namespace Project1.Controllers
 
         // DELETE: api/Duckbills/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteDuckbill(Guid id)
+        public async Task DeleteDuckbill(Guid id)
         {
-            var duckbill = await _context.Duckbill.FindAsync(id);
-            if (duckbill == null)
+            Duckbill duckbill = await _context.Duckbill.FindAsync(id);
+            if (duckbill != null)
             {
-                return NotFound();
+                _context.Duckbill.Remove(duckbill);
+                await _context.SaveChangesAsync();
             }
-
-            _context.Duckbill.Remove(duckbill);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
         }
 
         private bool DuckbillExists(Guid id)
