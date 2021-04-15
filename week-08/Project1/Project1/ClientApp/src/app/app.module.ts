@@ -27,12 +27,12 @@ import { DuckbillAddComponent } from './duckbill/duckbill-add.component';
     HttpClientModule,
     FormsModule,
     RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'counter', component: CounterComponent },
-      { path: 'fetch-data', component: FetchDataComponent },
-      { path: 'duckbills', component: DuckbillsComponent },
-      { path: 'duckbill-add', component: DuckbillAddComponent },
-    ])
+    { path: '', component: HomeComponent, pathMatch: 'full' },
+    { path: 'counter', component: CounterComponent },
+    { path: 'fetch-data', component: FetchDataComponent },
+    { path: 'duckbills', component: DuckbillsComponent },
+    { path: 'duckbill-add', component: DuckbillAddComponent },
+], { relativeLinkResolution: 'legacy' })
   ],
   providers: [],
   bootstrap: [AppComponent]
