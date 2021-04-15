@@ -10,6 +10,7 @@ import { HomeComponent } from './home/home.component';
 import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { DuckbillsComponent } from './duckbill/duckbill.component';
+import { DuckbillAddComponent } from './duckbill/duckbill-add.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { DuckbillsComponent } from './duckbill/duckbill.component';
     HomeComponent,
     CounterComponent,
     FetchDataComponent,
-    DuckbillsComponent
+    DuckbillsComponent,
+    DuckbillAddComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -29,6 +31,7 @@ import { DuckbillsComponent } from './duckbill/duckbill.component';
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
       { path: 'duckbills', component: DuckbillsComponent },
+      { path: 'duckbill-add', component: DuckbillAddComponent },
     ])
   ],
   providers: [],

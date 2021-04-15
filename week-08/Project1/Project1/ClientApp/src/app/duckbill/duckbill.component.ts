@@ -1,5 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Duckbill } from './duckbill.models';
 
 @Component({
   selector: 'app-duckbill',
@@ -13,9 +14,4 @@ export class DuckbillsComponent {
       this.duckbills = result;
     }, error => console.error(error));
   }
-}
-
-interface Duckbill {
-  id: string;
-  name: string;
 }
