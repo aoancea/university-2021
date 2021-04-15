@@ -76,12 +76,15 @@ namespace Project1.Controllers
         // POST: api/Duckbills
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Duckbill>> PostDuckbill(Duckbill duckbill)
+        public async Task PostDuckbill([FromBody] Duckbill duckbill)
         {
+            if (duckbill.ID == Guid.Empty)
+            {
+                duckbill.ID = Guid.NewGuid();
+            }
+
             _context.Duckbill.Add(duckbill);
             await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetDuckbill", new { id = duckbill.ID }, duckbill);
         }
 
         // DELETE: api/Duckbills/5
