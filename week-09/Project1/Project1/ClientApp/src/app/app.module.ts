@@ -11,6 +11,11 @@ import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { DuckbillsComponent } from './duckbill/duckbill.component';
 import { DuckbillAddComponent } from './duckbill/duckbill-add.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatSliderModule } from '@angular/material/slider';
 
 @NgModule({
   declarations: [
@@ -27,12 +32,15 @@ import { DuckbillAddComponent } from './duckbill/duckbill-add.component';
     HttpClientModule,
     FormsModule,
     RouterModule.forRoot([
-    { path: '', component: HomeComponent, pathMatch: 'full' },
-    { path: 'counter', component: CounterComponent },
-    { path: 'fetch-data', component: FetchDataComponent },
-    { path: 'duckbills', component: DuckbillsComponent },
-    { path: 'duckbill-add', component: DuckbillAddComponent },
-], { relativeLinkResolution: 'legacy' })
+      { path: '', component: HomeComponent, pathMatch: 'full' },
+      { path: 'counter', component: CounterComponent },
+      { path: 'fetch-data', component: FetchDataComponent },
+      { path: 'duckbills', component: DuckbillsComponent },
+      { path: 'duckbill-add', component: DuckbillAddComponent },
+    ], { relativeLinkResolution: 'legacy' }),
+    BrowserAnimationsModule,
+    MatSlideToggleModule,
+    MatSliderModule
   ],
   providers: [],
   bootstrap: [AppComponent]
