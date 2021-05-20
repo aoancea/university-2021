@@ -1,7 +1,9 @@
-import { Component, Inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Duckbill } from './duckbill.models';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+
+import { Duckbill } from './duckbill.models';
+
+import { DuckbillService } from './duckbill.service';
 
 @Component({
   selector: 'app-duckbill-add',
@@ -12,12 +14,11 @@ export class DuckbillAddComponent {
   public duckbill: Duckbill = <Duckbill>{};
 
   constructor(
-    private http: HttpClient,
-    @Inject('BASE_URL') private baseUrl: string,
+    private duckbillService: DuckbillService,
     private router: Router) { }
 
   public saveDuckbill() {
-    this.http.post(this.baseUrl + 'api/duckbills', this.duckbill).subscribe(result => {
+    this.duckbillService.saveDuckbill(this.duckbill).subscribe(result => {
       this.router.navigateByUrl("/duckbills");
     }, error => console.error(error))
   }

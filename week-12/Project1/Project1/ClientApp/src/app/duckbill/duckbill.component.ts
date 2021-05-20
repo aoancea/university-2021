@@ -1,6 +1,6 @@
-import { Component, Inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Component } from '@angular/core';
 import { Duckbill } from './duckbill.models';
+import { DuckbillService } from './duckbill.service';
 
 @Component({
   selector: 'app-duckbill',
@@ -9,18 +9,18 @@ import { Duckbill } from './duckbill.models';
 export class DuckbillsComponent {
   public duckbills: Duckbill[];
 
-  constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) {
+  constructor(private duckbillService: DuckbillService) {
     this.loadDuckbills();
   }
 
   public deleteDuckbill(duckbill: Duckbill) {
-    this.http.delete(this.baseUrl + 'api/duckbills/' + duckbill.id).subscribe(result => {
+    this.duckbillService.deleteDuckbill(duckbill).subscribe(result => {
       this.loadDuckbills();
     }, error => console.error(error))
   }
 
   loadDuckbills() {
-    this.http.get<Duckbill[]>(this.baseUrl + 'api/duckbills').subscribe(result => {
+    this.duckbillService.loadDuckbills().subscribe(result => {
       this.duckbills = result;
     }, error => console.error(error));
   }
