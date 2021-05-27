@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Project1.Models;
 
 namespace Project1.Data
 {
-    public class Project1Context : DbContext
+    public class Project1Context : IdentityDbContext
     {
         public Project1Context (DbContextOptions<Project1Context> options)
             : base(options)

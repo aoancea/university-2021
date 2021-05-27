@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Project1.Data;
 
 namespace Project1.Migrations
 {
     [DbContext(typeof(Project1Context))]
-    partial class Project1ContextModelSnapshot : ModelSnapshot
+    [Migration("20210527081759_Add_Identity_Tables")]
+    partial class Add_Identity_Tables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

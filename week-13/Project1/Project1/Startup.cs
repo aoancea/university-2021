@@ -1,11 +1,10 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.SpaServices.AngularCli;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Project1.Data;
 
 namespace Project1
@@ -31,6 +30,11 @@ namespace Project1
 
             services.AddDbContext<Project1Context>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("Project1Context")));
+
+            services
+                .AddIdentity<IdentityUser, IdentityRole>()
+                .AddEntityFrameworkStores<Project1Context>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
